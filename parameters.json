@@ -1,0 +1,18 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2015-01-01/deploymentParameters.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_testVMfromImage_name": {
+            "value": null
+        },
+        "images_testVM_image_20210714194258_externalid": {
+            "value": null
+        },
+        "disks_testVMfromImage_disk1_c0c5023fac4d4e8597c08d612501304d_externalid": {
+            "value": null
+        },
+        "networkInterfaces_testvmfromimage188_externalid": {
+            "value": null
+        }
+    }
+}

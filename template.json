@@ -1,0 +1,85 @@
+{
+    "$schema": "https://schema.management.azure.com/schemas/2019-04-01/deploymentTemplate.json#",
+    "contentVersion": "1.0.0.0",
+    "parameters": {
+        "virtualMachines_testVMfromImage_name": {
+            "defaultValue": "testVMfromImage",
+            "type": "String"
+        },
+        "images_testVM_image_20210714194258_externalid": {
+            "defaultValue": "/subscriptions/9da8fd06-97d8-44ec-8f34-0f14c14460c6/resourceGroups/2107080060001832/providers/Microsoft.Compute/images/testVM-image-20210714194258",
+            "type": "String"
+        },
+        "disks_testVMfromImage_disk1_c0c5023fac4d4e8597c08d612501304d_externalid": {
+            "defaultValue": "/subscriptions/9da8fd06-97d8-44ec-8f34-0f14c14460c6/resourceGroups/2107080060001832/providers/Microsoft.Compute/disks/testVMfromImage_disk1_c0c5023fac4d4e8597c08d612501304d",
+            "type": "String"
+        },
+        "networkInterfaces_testvmfromimage188_externalid": {
+            "defaultValue": "/subscriptions/9da8fd06-97d8-44ec-8f34-0f14c14460c6/resourceGroups/2107080060001832/providers/Microsoft.Network/networkInterfaces/testvmfromimage188",
+            "type": "String"
+        }
+    },
+    "variables": {},
+    "resources": [
+        {
+            "type": "Microsoft.Compute/virtualMachines",
+            "apiVersion": "2021-03-01",
+            "name": "[parameters('virtualMachines_testVMfromImage_name')]",
+            "location": "japaneast",
+            "zones": [
+                "1"
+            ],
+            "properties": {
+                "hardwareProfile": {
+                    "vmSize": "Standard_D8s_v3"
+                },
+                "storageProfile": {
+                    "imageReference": {
+                        "id": "[parameters('images_testVM_image_20210714194258_externalid')]"
+                    },
+                    "osDisk": {
+                        "osType": "Windows",
+                        "name": "[concat(parameters('virtualMachines_testVMfromImage_name'), '_disk1_c0c5023fac4d4e8597c08d612501304d')]",
+                        "createOption": "FromImage",
+                        "caching": "ReadWrite",
+                        "managedDisk": {
+                            "storageAccountType": "Premium_LRS",
+                            "id": "[parameters('disks_testVMfromImage_disk1_c0c5023fac4d4e8597c08d612501304d_externalid')]"
+                        },
+                        "diskSizeGB": 127
+                    },
+                    "dataDisks": []
+                },
+                "osProfile": {
+                    "computerName": "[parameters('virtualMachines_testVMfromImage_name')]",
+                    "adminUsername": "adminuser",
+                    "windowsConfiguration": {
+                        "provisionVMAgent": true,
+                        "enableAutomaticUpdates": true,
+                        "patchSettings": {
+                            "patchMode": "AutomaticByOS",
+                            "assessmentMode": "ImageDefault",
+                            "enableHotpatching": false
+                        }
+                    },
+                    "secrets": [],
+                    "allowExtensionOperations": true,
+                    "requireGuestProvisionSignal": true
+                },
+                "networkProfile": {
+                    "networkInterfaces": [
+                        {
+                            "id": "[parameters('networkInterfaces_testvmfromimage188_externalid')]"
+                        }
+                    ]
+                },
+                "diagnosticsProfile": {
+                    "bootDiagnostics": {
+                        "enabled": true
+                    }
+                },
+                "licenseType": "None"
+            }
+        }
+    ]
+}
